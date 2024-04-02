@@ -29,7 +29,7 @@ public class PowerUpBehaviour : MonoBehaviour
 
     private void PowerUpMovement()
     {
-        transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed);
+        transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed, Space.World);
         transform.Translate(Vector3.back * Time.deltaTime * speed, Space.World);
     }
 }
