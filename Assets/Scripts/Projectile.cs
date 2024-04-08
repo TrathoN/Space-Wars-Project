@@ -68,7 +68,6 @@ public class Projectile : MonoBehaviour
             GameObject.Find("SpawnManager").GetComponent<SpawnManager>().PlayHitSFX();
             Destroy(gameObject);
             collision.gameObject.GetComponent<EnemyManager>().enemyMaxHealth -= projectileDamage;
-            Debug.Log("Enemy Health: " + collision.gameObject.GetComponent<EnemyManager>().enemyMaxHealth);
             if (collision.gameObject.CompareTag("Boss"))
             {
                 GameObject.Find("Canvas").GetComponent<UIManager>().SetBossHealthBar(collision.gameObject.GetComponent<EnemyManager>().enemyMaxHealth);
@@ -82,7 +81,6 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject);
             collision.gameObject.GetComponent<PlayerManager>().playerMaxHealth -= projectileDamage;
             GameObject.Find("Canvas").GetComponent<UIManager>().HealthUpdate(collision.gameObject.GetComponent<PlayerManager>().playerMaxHealth);
-            Debug.Log("Player Health: " + collision.gameObject.GetComponent<PlayerManager>().playerMaxHealth);
         }
     }
 }

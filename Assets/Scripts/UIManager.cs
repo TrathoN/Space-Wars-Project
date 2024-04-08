@@ -19,24 +19,36 @@ public class UIManager : MonoBehaviour
     public GameObject bossBarField;
     public RectTransform bossBar;
     public RectTransform progressBar;
-    
+    public Slider musicSlider;
+    public Slider sfxSlider;
+
     private bool isPaused;
-    private AudioSource gameMusic;
-    private AudioSource pauseMusic;
 
     private void Start()
     {
         Time.timeScale = 1.0f;
-        gameMusic = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>();
-        pauseMusic = GetComponent<AudioSource>();
+        SetSounds();
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (GameObject.Find("SettingsMenu"))
+            {
+                GameObject.Find("SettingsMenu").SetActive(false);
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
     }
     public void PauseGame()
     {
         if(!isPaused)
         {
             Time.timeScale = 0;
-            gameMusic.Pause();
-            pauseMusic.Play();
             pauseMenu.SetActive(true);
             menuScoreText.text = "Score: " + totalScore;
             isPaused = !isPaused;
@@ -44,8 +56,6 @@ public class UIManager : MonoBehaviour
         else
         {
             Time.timeScale = 1.0f;
-            pauseMusic.Pause();
-            gameMusic.Play();
             pauseMenu.SetActive(false);
             isPaused = !isPaused;
         }
@@ -108,6 +118,27 @@ public class UIManager : MonoBehaviour
         bossBar.sizeDelta = new Vector2(barSizeX, 42.5f);
         bossBar.anchoredPosition = new Vector3(barSizeX / 2, -1);
         bossBarText.text = bossHealth + " / 3000";
+    }
+
+    private void SetSounds()
+    {
+        musicSlider.value = PlayerData.instance.musicVolume;
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().volume = PlayerData.instance.musicVolume;
+
+        sfxSlider.value = PlayerData.instance.sfxVolume;
+        GameObject.Find("SpawnManager").GetComponent<AudioSource>().volume = PlayerData.instance.sfxVolume;
+
+        musicSlider.onValueChanged.AddListener((v) =>
+        {
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().volume = v;
+            PlayerData.instance.musicVolume = v;
+        });
+
+        sfxSlider.onValueChanged.AddListener((v) =>
+        {
+            GameObject.Find("SpawnManager").GetComponent<AudioSource>().volume = v;
+            PlayerData.instance.sfxVolume = v;
+        });
     }
 
     private void SavePlayerHighScore()

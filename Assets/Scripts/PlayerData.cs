@@ -7,6 +7,8 @@ public class PlayerData : MonoBehaviour
     public static PlayerData instance;
 
     public int playerScore;
+    public float musicVolume;
+    public float sfxVolume;
 
     private void Awake()
     {

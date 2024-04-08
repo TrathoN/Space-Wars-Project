@@ -106,7 +106,7 @@ MonoBehaviour:
   enemyStepInterval: 3
   enemyAttackRate: 2
   enemyPoint: 15
-  powerUpLuck: 5
+  powerUpLuck: 8
   isElite: 0
 --- !u!64 &8518546232023422230
 MeshCollider:

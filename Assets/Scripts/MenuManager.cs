@@ -8,26 +8,30 @@ using UnityEditor;
 #endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
     public TextMeshProUGUI highScoreText;
     public RectTransform backgroundImage;
+    public GameObject settingsMenu;
     [SerializeField] private float backgroundSpeed;
     [SerializeField] private float backgroundMinY;
     [SerializeField] private float backgroundMaxY;
-    private int backgroundDirection;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
+    [SerializeField] private int backgroundDirection;
     private void Start()
     {
-        backgroundDirection = 1;
+        Time.timeScale = 1.0f;
         LoadPlayerData();
+        SetMenuSounds();
     }
 
     private void Update()
     {
         backgroundImage.transform.Translate(Vector3.up * backgroundDirection * Time.deltaTime * backgroundSpeed);
-
-        MoveBackground();
+        SetDirectionBackground();
     }
     public void StartGame()
     {
@@ -43,9 +47,26 @@ public class MenuManager : MonoBehaviour
 #endif
     }
 
-    private void MoveBackground()
+    private void SetMenuSounds()
     {
-        if((backgroundImage.transform.position.y < backgroundMinY) || (backgroundImage.transform.position.y > backgroundMaxY))
+        PlayerData.instance.musicVolume = musicSlider.value;
+        PlayerData.instance.sfxVolume = sfxSlider.value;
+
+        musicSlider.onValueChanged.AddListener((v) =>
+        {
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().volume = v;
+            PlayerData.instance.musicVolume = v;
+        });
+
+        sfxSlider.onValueChanged.AddListener((v) =>
+        {
+            PlayerData.instance.sfxVolume = v;
+        });
+    }
+
+    private void SetDirectionBackground()
+    {
+        if ((backgroundImage.transform.position.y < backgroundMinY) || (backgroundImage.transform.position.y > backgroundMaxY))
         {
             backgroundDirection = -backgroundDirection;
         }
