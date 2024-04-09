@@ -4,4 +4,10 @@ This is a one level project of a game I created in Unity. Feel free to dig aroun
 
 ## Screenshots
 
-![](https://imgur.com/tqIC5ZT)
+![](Screenshot-01.png)
+
+![](Screenshot-02.png)
+
+![](Screenshot-03.png)
+
+![](Screenshot-04.png)
