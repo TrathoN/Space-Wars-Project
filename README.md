@@ -4,4 +4,4 @@ This is a one level project of a game I created in Unity. Feel free to dig aroun
 
 ## Screenshots
 
-![](https://imgur.com/a/2eZq2pP)
+![](https://imgur.com/tqIC5ZT)
